@@ -1,33 +1,60 @@
-.App {
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: auto;
+}
+body {
+    padding: 20px 50px;
+}
+.row {
+    display: flex;
+    justify-content: center;
+}
+.left {
+    width: 50%;
+    padding-right: 15px;
+}
+.right {
+    width: 50%;
+    padding-left: 15px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.leaderboard td, .leaderboard th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+.leaderboard th:nth-child(1) {
+  width: 15px;
+}
+.leaderboard th:nth-child(2) {
+  width: 25px;
+}
+.leaderboard td:nth-child(1), td:nth-child(2) {
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  animation-direction: reverse;
-  height: 40vmin;
+.roles td {
+  text-align: left;
+  font-size: 20px;
+}
+.roles  td:nth-child(1) {
+  width: 100px;
+  font-weight: 700;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+  .left, .right {
+    width: 100%;
+  }
+}
+@media (max-width: 400px) {
+  body {
+      padding: 20px;
   }
 }
