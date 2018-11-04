@@ -39,9 +39,10 @@ table {
 .roles td {
   text-align: left;
   font-size: 20px;
+  padding: 5px 0;
 }
 .roles  td:nth-child(1) {
-  width: 130px;
+  width: 250px;
   font-weight: 700;
 }
 .eventlog-container {
@@ -61,7 +62,7 @@ table {
   flex-direction: row;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .row {
     flex-direction: column;
   }
