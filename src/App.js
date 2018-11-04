@@ -161,7 +161,7 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <h1>Title</h1>
+        <h1>Chore Wars</h1>
         <div className="row">
           <div className="left">
             <h2>Leaderboard</h2>
@@ -228,7 +228,7 @@ class EventLog extends Component {
             // this.state.events.sort((a, b) => {
             //   let date1 = moment(a.date, "MM/DD/YYYY HH:mm:ss");
             //   let date2 = moment(b.date, "MM/DD/YYYY HH:mm:ss");
-              
+
             //   if(date2.isBefore(date1)) {
             //     return 1;
             //   } else if(date2.isSame(date1)) {
