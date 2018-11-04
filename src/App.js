@@ -114,32 +114,43 @@ class Header extends Component {
           doc.ref.update({'date': dbDate.add(offset, 'w').format("DD/MM/YYYY")});
 
           //increment role ID and get people
-          usersC.orderBy('points', 'desc').get()
-            .then(snapshot => {
-              snapshot.forEach(doc => {
-                var newID = (doc.data().role + 1) % 4;
-                doc.ref.update({'role': newID});
-                var newArray = this.state.people.slice();
-                newArray.push(doc.data());
-                this.setState({people:newArray})
-              });
-            })
-            .catch(err => {
-              console.log('Error getting role document', err);
+          // usersC.orderBy('points', 'desc').get()
+          //   .then(snapshot => {
+          //     snapshot.forEach(doc => {
+          //       var newID = (doc.data().role + 1) % 4;
+          //       doc.ref.update({'role': newID});
+          //       var newArray = this.state.people.slice();
+          //       newArray.push(doc.data());
+          //       this.setState({people:newArray})
+          //     });
+          //   })
+          //   .catch(err => {
+          //     console.log('Error getting role document', err);
+          //   });
+
+          usersC.onSnapshot(querySnapshot => {
+            var newArray = [];
+            querySnapshot.forEach(doc => {
+              var newID = (doc.data().role + 1) % 4;
+              doc.ref.update({'role': newID});
+              newArray.push(doc.data());
+              this.setState({people:newArray})
             });
+          }, err => {
+            console.log(`Encountered error: ${err}`);
+          })
+
         } else {
           //just get people
-          usersC.orderBy('points', 'desc').get()
-            .then(snapshot => {
-              snapshot.forEach(doc => {
-                var newArray = this.state.people.slice();
-                newArray.push(doc.data());
-                this.setState({people:newArray})
-              });
-            })
-            .catch(err => {
-              console.log('Error getting role document', err);
+          usersC.onSnapshot(querySnapshot => {
+            var newArray = [];
+            querySnapshot.forEach(doc => {
+              newArray.push(doc.data());
+              this.setState({people:newArray})
             });
+          }, err => {
+            console.log(`Encountered error: ${err}`);
+          })
         }
     })
     .catch(err => {
@@ -200,6 +211,7 @@ class EventLog extends Component {
     };
     let identifier = 0;
     let temp = [];
+
     db.collection('eventLogData')
     .onSnapshot(querySnapshot => {
         querySnapshot.docChanges().forEach(change => {
@@ -224,7 +236,6 @@ class EventLog extends Component {
             //   } else if(date2.isAfter(date1)) {
             //     return -1;
             //   }
-            });
           }
         });
     });
