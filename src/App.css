@@ -44,6 +44,22 @@ table {
   width: 130px;
   font-weight: 700;
 }
+.eventlog-container {
+  display: flex;
+}
+.event-prop {
+  justify-content: left;
+  flex: 1;
+  width: 30%;
+}
+.event-log-head {
+  display: flex;
+  flex-direction: row;
+}
+.event-log-content {
+  display: flex;
+  flex-direction: row;
+}
 
 @media (max-width: 600px) {
   .row {

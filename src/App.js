@@ -133,7 +133,6 @@ class Event extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: props.key,
       user: props.name,
       chore: props.chore,
       date: props.date
@@ -141,17 +140,17 @@ class Event extends Component {
   }
   render() {
     return(
-      <div >
-        <div>
-          { this.props.user }
+        <div className="event-log-content">
+          <div className="event-prop">
+            { this.props.user }
+          </div>
+          <div className="event-prop">
+            { this.props.chore }
+          </div>
+          <div className="event-prop">
+            { this.props.date }
+          </div>
         </div>
-        <div>
-          { this.props.chore }
-        </div>
-        <div>
-          { this.props.date }
-        </div>
-      </div>
     );
   };
 }
@@ -164,25 +163,28 @@ class EventLog extends Component {
     };
     let identifier = 0;
     let temp = [];
-    db.collection('eventLogData')
-    .get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          let newEvent = doc.data();
-          newEvent.id = identifier;
-          identifier = identifier + 1;
-          this.state.events.push(newEvent);
-        });
-    });
+    // db.collection('eventLogData')
+    // .get()
+    // .then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //       let newEvent = doc.data();
+    //       newEvent.id = identifier;
+    //       identifier = identifier + 1;
+    //       this.state.events.push(newEvent);
+    //     });
+    // });
     
-    temp = [];
+    // temp = [];
     db.collection('eventLogData')
     .onSnapshot(querySnapshot => {
         querySnapshot.docChanges().forEach(change => {
-          if(change.type === "added") {
-            let newEvent = change.doc.data();
-            newEvent.id = identifier;
-            identifier = identifier + 1;
+          let newEvent = change.doc.data();
+          newEvent.id = identifier;
+          identifier = identifier + 1;
+          function notNewEvent(event) {
+            return event === newEvent;
+          }
+          if(change.type === "added" && !this.state.events.find(notNewEvent)) {
             temp = this.state.events;
             temp.push(newEvent);
             this.setState({events: temp});
@@ -198,9 +200,20 @@ class EventLog extends Component {
 
   render() {
     return (
-      <div>
+      <div className="event-log-container">
         <div>
           <h2>Event Log</h2>
+        </div>
+        <div className="event-log-head">
+            <div className="event-prop">
+              <strong>Name</strong>
+            </div>
+            <div className="event-prop">
+              <strong>Chore</strong>
+            </div>
+            <div className="event-prop">
+              <strong>Date</strong>
+            </div>
         </div>
         <div>
         
