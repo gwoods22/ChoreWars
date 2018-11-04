@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import hiddenKey from './api.js';
 
 var moment = require('moment');
 
@@ -7,8 +8,10 @@ const firebase = require('firebase/app');
 // Required for side-effects
 require("firebase/firestore");
 
+
+
 firebase.initializeApp({
-  apiKey: "AIzaSyAlWvWD1ISY8c2_QOCZ7H_Spj9GlpiolP4",
+  apiKey: hiddenKey,
   authDomain: "emersonchores.firebaseapp.com",
   projectId: "emersonchores"
 });
