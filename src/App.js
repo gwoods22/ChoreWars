@@ -211,33 +211,7 @@ class EventLog extends Component {
     };
     let identifier = 0;
     let temp = [];
-<<<<<<< HEAD
-    // db.collection('eventLogData')
-    // .get()
-    // .then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //       let newEvent = doc.data();
-    //       newEvent.id = identifier;
-    //       identifier = identifier + 1;
-    //       this.state.events.push(newEvent);
-    //     });
-    // });
 
-    // temp = [];
-    db.collection('eventLogData')
-    .get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          let newEvent = doc.data();
-          newEvent.id = identifier;
-          identifier = identifier + 1;
-          this.state.events.push(newEvent);
-        });
-    });
-
-    temp = [];
-=======
->>>>>>> 4e70fb97e331eac78a75cc16fb8a100e318e232a
     db.collection('eventLogData')
     .onSnapshot(querySnapshot => {
         querySnapshot.docChanges().forEach(change => {
@@ -256,7 +230,7 @@ class EventLog extends Component {
               let date2 = moment(b.date, "MM/DD/YYYY HH:mm:ss");
               date1 = parseInt(date1.format("YYYYMMDDHHmmss"));
               date2 = parseInt(date2.format("YYYYMMDDHHmmss"));
-              
+
               return date2-date1;
             })
           }
