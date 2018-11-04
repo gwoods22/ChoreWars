@@ -25,6 +25,20 @@ var usersC = db.collection('users');
 
 var dateC = db.collection('general').doc('lastUpdated');
 
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    return (
+      <div>
+        <Header></Header>
+        <EventLog></EventLog>
+      </div>
+    );
+  }
+}
 
 function Leaderboard(props) {
   return (
@@ -115,4 +129,91 @@ class Header extends Component {
   }
 }
 
-export default Header;
+class Event extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      key: props.key,
+      user: props.name,
+      chore: props.chore,
+      date: props.date
+    };
+  }
+  render() {
+    return(
+      <div >
+        <div>
+          { this.props.user }
+        </div>
+        <div>
+          { this.props.chore }
+        </div>
+        <div>
+          { this.props.date }
+        </div>
+      </div>
+    );
+  };
+}
+
+class EventLog extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      events: []
+    };
+    let identifier = 0;
+    let temp = [];
+    db.collection('eventLogData')
+    .get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          let newEvent = doc.data();
+          newEvent.id = identifier;
+          identifier = identifier + 1;
+          this.state.events.push(newEvent);
+        });
+    });
+    
+    temp = [];
+    db.collection('eventLogData')
+    .onSnapshot(querySnapshot => {
+        querySnapshot.docChanges().forEach(change => {
+          if(change.type === "added") {
+            let newEvent = change.doc.data();
+            newEvent.id = identifier;
+            identifier = identifier + 1;
+            temp = this.state.events;
+            temp.push(newEvent);
+            this.setState({events: temp});
+          }
+        });
+    });
+    
+    this.state.events.forEach(element => {
+      console.log(element.user);
+    });
+  }
+  
+
+  render() {
+    return (
+      <div>
+        <div>
+          <h2>Event Log</h2>
+        </div>
+        <div>
+        
+        {this.state.events.map(e => 
+          <Event key={e.id} user={e.name} chore={e.chore} date={e.date}>
+          </Event>
+        )}
+
+        </div>
+      </div>
+    );
+  };
+}
+
+export default App;
+
