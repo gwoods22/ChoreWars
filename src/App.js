@@ -41,6 +41,11 @@ class App extends Component {
 }
 
 function Leaderboard(props) {
+  props.people.sort(function compare(a, b) {
+    if (a.points < b.points) return 1;
+    if (a.points > b.points) return -1;
+    return 0;
+  })
   return (
     <table className="leaderboard">
       <tbody>
@@ -62,13 +67,24 @@ function Leaderboard(props) {
 }
 
 
+// ROLE IDs
+// 0 = Counters
+// 1 = Sweeping
+// 2 = Living Room
+// 3 = Garbage
 function Roles(props) {
+  //sorted by role not points
+  props.people.sort(function compare(a, b) {
+    if (a.role < b.role) return -1;
+    if (a.role > b.role) return  1;
+    return 0;
+  })
   return (
     <table className="roles">
       <tbody>
         {props.people.map(p =>
           <tr key={p.id}>
-            <td>ROLL</td>
+            <td>{props.roles[p.role]}</td>
             <td>{p.name}</td>
           </tr>
         )}
@@ -81,9 +97,12 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      roles: [
+        'Counters',
+        'Sweeping',
+        'Living Room',
+        'Garbage'],
       people: [],
-      lastUpdated: '',
-      offset: ''
     };
 
     dateC.get()
@@ -93,22 +112,40 @@ class Header extends Component {
         var offset = Math.floor(moment.duration(ms)._data.days/7);
         if (offset > 0) {
           doc.ref.update({'date': dbDate.add(offset, 'w').format("DD/MM/YYYY")});
-          //new week, inc by offset
+
+          //increment role ID and get people
+          usersC.orderBy('points', 'desc').get()
+            .then(snapshot => {
+              snapshot.forEach(doc => {
+                var newID = (doc.data().role + 1) % 4;
+                doc.ref.update({'role': newID});
+                var newArray = this.state.people.slice();
+                newArray.push(doc.data());
+                this.setState({people:newArray})
+              });
+            })
+            .catch(err => {
+              console.log('Error getting role document', err);
+            });
+        } else {
+          //just get people
+          usersC.orderBy('points', 'desc').get()
+            .then(snapshot => {
+              snapshot.forEach(doc => {
+                var newArray = this.state.people.slice();
+                newArray.push(doc.data());
+                this.setState({people:newArray})
+              });
+            })
+            .catch(err => {
+              console.log('Error getting role document', err);
+            });
         }
-      })
+    })
+    .catch(err => {
+      console.log('Error getting date document', err);
+    });
 
-
-    usersC.orderBy('points', 'desc').get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          var newArray = this.state.people.slice();
-          newArray.push(doc.data());
-          this.setState({people:newArray})
-        });
-      })
-      .catch(err => {
-        console.log('Error getting documents', err);
-      });
   }
   render() {
     return (
@@ -121,7 +158,7 @@ class Header extends Component {
           </div>
           <div className="right">
             <h2>Roles</h2>
-            <Roles people={this.state.people}/>
+            <Roles people={this.state.people} roles={this.state.roles}/>
           </div>
         </div>
       </div>
@@ -176,6 +213,18 @@ class EventLog extends Component {
     
     // temp = [];
     db.collection('eventLogData')
+    .get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          let newEvent = doc.data();
+          newEvent.id = identifier;
+          identifier = identifier + 1;
+          this.state.events.push(newEvent);
+        });
+    });
+
+    temp = [];
+    db.collection('eventLogData')
     .onSnapshot(querySnapshot => {
         querySnapshot.docChanges().forEach(change => {
           let newEvent = change.doc.data();
@@ -191,12 +240,12 @@ class EventLog extends Component {
           }
         });
     });
-    
+
     this.state.events.forEach(element => {
       console.log(element.user);
     });
   }
-  
+
 
   render() {
     return (
@@ -216,8 +265,8 @@ class EventLog extends Component {
             </div>
         </div>
         <div>
-        
-        {this.state.events.map(e => 
+
+        {this.state.events.map(e =>
           <Event key={e.id} user={e.name} chore={e.chore} date={e.date}>
           </Event>
         )}
@@ -229,4 +278,3 @@ class EventLog extends Component {
 }
 
 export default App;
-
