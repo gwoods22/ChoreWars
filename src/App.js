@@ -40,12 +40,30 @@ class App extends Component {
   }
 }
 
+
 function Leaderboard(props) {
   props.people.sort(function compare(a, b) {
     if (a.points < b.points) return 1;
     if (a.points > b.points) return -1;
     return 0;
   })
+  function addPoint(user) {
+    db.collection("users").where("name", "==", user)
+    .get()
+    .then(function(querySnapshot) {
+        //console.log("check1");
+        var doc = querySnapshot.docs[0];
+        var current = doc.data().points;
+        doc.ref.update({
+            points: current + 1
+        });
+        
+        //console.log("Check3");
+    })
+    .catch(function(error) {
+        console.log("Error getting documents from users: ", error);
+    });
+  }
   return (
     <table className="leaderboard">
       <tbody>
@@ -59,6 +77,7 @@ function Leaderboard(props) {
             <td>{index + 1}</td>
             <td>{p.points}</td>
             <td>{p.name}</td>
+            <td><button className="btn btn-1 btn-1a" type="submit" onClick={() => {addPoint(p.name)}}>Finshed Chore</button></td>
           </tr>
           )}
       </tbody>
@@ -99,9 +118,12 @@ class Header extends Component {
     this.state = {
       roles: [
         'Counter Commander',
-        'Sweeping Sargeant',
+        'Sweeping Sergeant',
         'Living Room Lieutenant',
-        'Garbage Governor'],
+        'Garbage Governor',
+        'Recycling Ranger',
+        'Dish Deputy'
+      ],
       people: [],
     };
 
