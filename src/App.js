@@ -98,10 +98,10 @@ class Header extends Component {
     super(props);
     this.state = {
       roles: [
-        'Counters',
-        'Sweeping',
-        'Living Room',
-        'Garbage'],
+        'Counter Commander',
+        'Sweeping Sargeant',
+        'Living Room Lieutenant',
+        'Garbage Governor'],
       people: [],
     };
 
