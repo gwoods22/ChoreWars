@@ -213,14 +213,18 @@ class EventLog extends Component {
             temp = this.state.events;
             temp.push(newEvent);
             this.setState({events: temp});
-            this.state.events.sort((a, b) => {
-              let date1 = moment(a.date, "MM/DD/YYYY HH:mm:ss");
-              let date2 = moment(b.date, "MM/DD/YYYY HH:mm:ss");
-              date1 = parseInt(date1.format("YYYYMMDDHHmmss"));
-              date2 = parseInt(date2.format("YYYYMMDDHHmmss"));
+            // this.state.events.sort((a, b) => {
+            //   let date1 = moment(a.date, "MM/DD/YYYY HH:mm:ss");
+            //   let date2 = moment(b.date, "MM/DD/YYYY HH:mm:ss");
               
-              return date2-date1;
-            })
+            //   if(date2.isBefore(date1)) {
+            //     return 1;
+            //   } else if(date2.isSame(date1)) {
+            //     return 0;
+            //   } else if(date2.isAfter(date1)) {
+            //     return -1;
+            //   }
+            });
           }
         });
     });
