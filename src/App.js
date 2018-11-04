@@ -200,30 +200,6 @@ class EventLog extends Component {
     };
     let identifier = 0;
     let temp = [];
-    // db.collection('eventLogData')
-    // .get()
-    // .then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //       let newEvent = doc.data();
-    //       newEvent.id = identifier;
-    //       identifier = identifier + 1;
-    //       this.state.events.push(newEvent);
-    //     });
-    // });
-    
-    // temp = [];
-    db.collection('eventLogData')
-    .get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          let newEvent = doc.data();
-          newEvent.id = identifier;
-          identifier = identifier + 1;
-          this.state.events.push(newEvent);
-        });
-    });
-
-    temp = [];
     db.collection('eventLogData')
     .onSnapshot(querySnapshot => {
         querySnapshot.docChanges().forEach(change => {
@@ -237,15 +213,21 @@ class EventLog extends Component {
             temp = this.state.events;
             temp.push(newEvent);
             this.setState({events: temp});
+            this.state.events.sort((a, b) => {
+              let date1 = moment(a.date, "MM/DD/YYYY HH:mm:ss");
+              let date2 = moment(b.date, "MM/DD/YYYY HH:mm:ss");
+              date1 = parseInt(date1.format("YYYYMMDDHHmmss"));
+              date2 = parseInt(date2.format("YYYYMMDDHHmmss"));
+              
+              return date2-date1;
+            })
           }
         });
     });
-
     this.state.events.forEach(element => {
       console.log(element.user);
     });
   }
-
 
   render() {
     return (
