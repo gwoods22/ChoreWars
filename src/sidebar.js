@@ -5,8 +5,11 @@ import {
 } from "react-router-dom";
 
 export default props => {
+    let state = {
+        open: false
+    };
     return (
-        <Menu>
+        <Menu isOpen={state.open}>
             <NavLink className="menu-item" exact to="/">
             Home
             </NavLink>
