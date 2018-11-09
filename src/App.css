@@ -34,7 +34,11 @@ html, body {
   color: #fff;
   background: #0e83cd;
 }
-
+.desc {
+  display: block;
+  font-weight: 400;
+  font-size: 17px;
+}
 /* Button 1a */
 .btn-1a:hover,
 .btn-1a:active {
