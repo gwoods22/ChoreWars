@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import SideBar from './sidebar';
+import SideBar from './components/sidebar';
 import {
   Route,
   HashRouter
 } from "react-router-dom";
-import Home from "./Home";
-import EventLog from "./EventLog";
+import Home from "./components/Home";
+import EventLog from "./components/EventLog";
 
 class App extends Component {
   constructor(props) {

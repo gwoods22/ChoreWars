@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Event from './Event'
-import firebaseRef from './firebaseconfig';
+import firebaseRef from '../firebaseconfig';
 
 const db = firebaseRef.firestore();
+const settings = {timestampsInSnapshots: true};
+db.settings(settings);
 
 class EventLog extends Component {
     constructor(props) {
@@ -15,14 +17,14 @@ class EventLog extends Component {
   
       db.collection('eventLogData').orderBy("date")
       .onSnapshot(querySnapshot => {
-          querySnapshot.docChanges().forEach(change => {
+          querySnapshot.docChanges().forEach (change => {
             let newEvent = change.doc.data();
             newEvent.id = identifier;
             identifier = identifier + 1;
             function NewEvent(event) {
               return event === newEvent;
             }
-            if(change.type === "added" && !this.state.events.find(NewEvent)) {
+            if (change.type === "added" && !this.state.events.find (NewEvent)) {
               temp = this.state.events;
               temp.unshift(newEvent);
               // if(this.state.events.length > 5) { //keep event log to 5 events
