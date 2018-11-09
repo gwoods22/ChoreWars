@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import firebaseRef from './firebaseconfig';
+import firebaseRef from '../firebaseconfig';
+import Roles from './Roles';
 
 const db = firebaseRef.firestore();
+const settings = {timestampsInSnapshots: true};
+db.settings(settings);
 
 let moment = require('moment');
 
@@ -73,26 +76,56 @@ function Leaderboard(props) {
   // 1 = Sweeping
   // 2 = Living Room
   // 3 = Garbage
-  function Roles(props) {
-    //sorted by role not points
-    props.people.sort(function compare(a, b) {
-      if (a.role < b.role) return -1;
-      if (a.role > b.role) return  1;
-      return 0;
-    })
-    return (
-      <table className="roles">
-        <tbody>
-          {props.people.map(p =>
-            <tr key={p.id}>
-              <td>{props.roles[p.role]}</td>
-              <td>{p.name}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    );
-  }
+  // function Roles(props) {
+  //   //sorted by role not points
+  //   // let state = {
+  //   //   showRole: {
+  //   //     'Counter Commander': false,
+  //   //     'Sweeping Sergeant': false,
+  //   //     'Living Room Lieutenant': false,
+  //   //     'Garbage Governor': false,
+  //   //     'Recycling Ranger': false,
+  //   //     'Dish Deputy': false
+  //   //   },
+  //   //   roleDesc: {
+  //   //     'Counter Commander': "This is the counter desc",
+  //   //     'Sweeping Sergeant': "This is the sweep desc",
+  //   //     'Living Room Lieutenant': "This is the LR desc",
+  //   //     'Garbage Governor': "This is the GG desc",
+  //   //     'Recycling Ranger': "This is the RR desc",
+  //   //     'Dish Deputy': "This is the DD desc"
+  //   //   }
+  //   // }
+  //   props.people.sort(function compare(a, b) {
+  //     if (a.role < b.role) return -1;
+  //     if (a.role > b.role) return  1;
+  //     return 0;
+  //   })
+  //   // function toggleRoles(role, s) {
+  //   //   s.showRoles[role] = s.showRoles[role] ? false : true;
+  //   // }
+  //   return (
+  //     <div>
+  //       <table className="roles">
+  //         <tbody>
+  //           {props.people.map(p =>
+  //             <tr key={p.id}>
+  //               <td /*onClick={() => {toggleRoles(props.roles[p.role], state)}}*/>{props.roles[p.role]}</td>
+  //               <td>{p.name}</td>
+  //             </tr>
+  //           )}
+  //         </tbody>
+  //       </table>
+  //       {/* <p> { state.showRole[props.roles[0]] ? state.roleDesc[props.roles[0]] : null } </p>
+  //       <p> { state.showRole[props.roles[1]] ? state.roleDesc[props.roles[1]] : null } </p>
+  //       <p> { state.showRole[props.roles[2]] ? state.roleDesc[props.roles[2]] : null } </p>
+  //       <p> { state.showRole[props.roles[3]] ? state.roleDesc[props.roles[3]] : null } </p>
+  //       <p> { state.showRole[props.roles[4]] ? state.roleDesc[props.roles[4]] : null } </p>
+  //       <p> { state.showRole[props.roles[5]] ? state.roleDesc[props.roles[5]] : null } </p> */}
+
+  //     </div>
+  //   );
+  // }
   
 class Home extends Component {
     constructor(props) {
@@ -138,11 +171,11 @@ class Home extends Component {
                 var newID = (doc.data().role + 1) % 4;
                 doc.ref.update({'role': newID});
                 newArray.push(doc.data());
-                this.setState({people:newArray})
+                this.setState({people:newArray});
               });
             }, err => {
               console.log(`Encountered error: ${err}`);
-            })
+            });
   
           } else {
             //just get people
@@ -154,7 +187,7 @@ class Home extends Component {
               });
             }, err => {
               console.log(`Encountered error: ${err}`);
-            })
+            });
           }
       })
       .catch(err => {
@@ -177,7 +210,7 @@ class Home extends Component {
             </div>
           </div>
         </div>
-      )
+      );
     }
   }
 
