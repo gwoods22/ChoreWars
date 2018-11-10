@@ -1,10 +1,6 @@
 import React, {Component} from 'react';
-import firebaseRef from '../firebaseconfig';
+import db from '../firebaseconfig';
 import Roles from './Roles';
-
-const db = firebaseRef.firestore();
-const settings = {timestampsInSnapshots: true};
-db.settings(settings);
 
 let moment = require('moment');
 

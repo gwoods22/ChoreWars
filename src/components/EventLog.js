@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import Event from './Event'
-import firebaseRef from '../firebaseconfig';
-
-const db = firebaseRef.firestore();
-const settings = {timestampsInSnapshots: true};
-db.settings(settings);
+import db from '../firebaseconfig';
 
 class EventLog extends Component {
     constructor(props) {
@@ -14,7 +10,7 @@ class EventLog extends Component {
       };
       let identifier = 0;
       let temp = [];
-  
+
       db.collection('eventLogData').orderBy("date")
       .onSnapshot(querySnapshot => {
           querySnapshot.docChanges().forEach (change => {
@@ -38,7 +34,7 @@ class EventLog extends Component {
         console.log(element.user);
       });
     }
-  
+
     render() {
       return (
         <div className="event-log-container">
@@ -57,12 +53,12 @@ class EventLog extends Component {
               </div>
           </div>
           <div>
-  
+
           {this.state.events.map(e =>
             <Event key={e.id} user={e.name} chore={e.chore} date={e.date}>
             </Event>
           )}
-  
+
           </div>
         </div>
       );
