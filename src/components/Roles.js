@@ -4,52 +4,64 @@ class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      roles: props.roles,
-      people: props.people,
       //whether or not desc is shown
-      'Counter Commander': false,
-      'Sweeping Sergeant': false,
-      'Living Room Lieutenant': false,
-      'Garbage Governor': false,
-      'Recycling Ranger': false,
-      roleDesc: {
-        'Counter Commander': "This is the counter desc",
-        'Sweeping Sergeant': "This is the sweep desc",
-        'Living Room Lieutenant': "This is the LR desc",
-        'Garbage Governor': "This is the GG desc",
-        'Recycling Ranger': "This is the RR desc",
-        'Dish Deputy': "This is the DD desc"
-      }
+      show: [false, false, false, false, false, false ]
     };
-    // this.state.people.sort(function compare(a, b) {
-    //   if (a.role < b.role) return -1;
-    //   if (a.role > b.role) return  1;
-    //   return 0;
-    // });
-    console.log(this.state.people);
+    this.toggleRoles = this.toggleRoles.bind(this);
   }
-  toggleRoles(role) {
-    if(this.state[role]) {
-      this.setState({role: false});
+
+  toggleRoles = (index) => {
+    if(this.state.show[0]) {
+      this.setState(prevState => ({
+        // show: prevState.slice(0,index).concat([true]).concat(prevState.slice(index+1, prevState.length))
+        show: [false, false, false, false, false, false ]
+      }))
     } else {
-      this.setState({role: true});
+      this.setState(prevState => ({
+        // show: prevState.slice(0,index).concat([false]).concat(prevState.slice(index+1, prevState.length))
+        show: [true, true, true, true, true, true ]
+      }))
     }
+    console.log('working');
   }
+
   render() {
     return (
       <div>
         <table className="roles">
           <tbody>
-            {this.state.people.map(p =>
-              <div>
+            { [].concat(this.props.people)
+              .sort(function compare(a, b) {
+                if (a.role < b.role) return -1;
+                if (a.role > b.role) return  1;
+                return 0;
+              })
+              .map(p =>
                 <tr key={p.id}>
-                  <td onClick={() => {this.toggleRoles(this.state.roles[p.role])}}>{this.state.roles[p.role]}</td>
+                  <td>
+                    {this.props.roles[p.role].name}
+                    <button onClick={() => {this.toggleRoles(p.role) } }>Description</button>
+                     <span className="desc">
+                       { this.state.show[p.role] &&
+                         this.props.roles[p.role].description }
+                     </span>
+                  </td>
                   <td>{p.name}</td>
                 </tr>
-                <p> { this.state[this.state.roles[p.role]] ? this.state.roleDesc[this.state.roles[p.role]] : null } </p>
-              </div>
             )}
           </tbody>
+          {/* Lucas' Code
+          <tbody>
+            {this.props.people.map(p =>
+              <div>
+                <tr key={p.id}>
+                  <td onClick={() => {this.toggleRoles(this.props.roles[p.role])}}>{this.props.roles[p.role]}</td>
+                  <td>{p.name}</td>
+                </tr>
+                <p> { this.props[this.props.roles[p.role]] ? this.props.roleDesc[this.props.roles[p.role]] : null } </p>
+              </div>
+            )}
+          </tbody>*/}
         </table>
       </div>
     );

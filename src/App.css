@@ -39,6 +39,9 @@ html, body {
   font-weight: 400;
   font-size: 17px;
 }
+.roles button {
+  display: block;
+}
 /* Button 1a */
 .btn-1a:hover,
 .btn-1a:active {

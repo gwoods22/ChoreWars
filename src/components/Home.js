@@ -18,14 +18,13 @@ function Leaderboard(props) {
       db.collection("users").where("name", "==", user)
       .get()
       .then(function(querySnapshot) {
-          //console.log("check1");
+
           var doc = querySnapshot.docs[0];
           var current = doc.data().points;
           doc.ref.update({
               points: current + 1
           });
-          
-          //console.log("Check3");
+
       })
       .catch(function(error) {
           console.log("Error getting documents from users: ", error);
@@ -65,79 +64,35 @@ function Leaderboard(props) {
       </table>
     );
   }
-  
-  
-  // ROLE IDs
-  // 0 = Counters
-  // 1 = Sweeping
-  // 2 = Living Room
-  // 3 = Garbage
-  // function Roles(props) {
-  //   //sorted by role not points
-  //   // let state = {
-  //   //   showRole: {
-  //   //     'Counter Commander': false,
-  //   //     'Sweeping Sergeant': false,
-  //   //     'Living Room Lieutenant': false,
-  //   //     'Garbage Governor': false,
-  //   //     'Recycling Ranger': false,
-  //   //     'Dish Deputy': false
-  //   //   },
-  //   //   roleDesc: {
-  //   //     'Counter Commander': "This is the counter desc",
-  //   //     'Sweeping Sergeant': "This is the sweep desc",
-  //   //     'Living Room Lieutenant': "This is the LR desc",
-  //   //     'Garbage Governor': "This is the GG desc",
-  //   //     'Recycling Ranger': "This is the RR desc",
-  //   //     'Dish Deputy': "This is the DD desc"
-  //   //   }
-  //   // }
-  //   props.people.sort(function compare(a, b) {
-  //     if (a.role < b.role) return -1;
-  //     if (a.role > b.role) return  1;
-  //     return 0;
-  //   })
-  //   // function toggleRoles(role, s) {
-  //   //   s.showRoles[role] = s.showRoles[role] ? false : true;
-  //   // }
-  //   return (
-  //     <div>
-  //       <table className="roles">
-  //         <tbody>
-  //           {props.people.map(p =>
-  //             <tr key={p.id}>
-  //               <td /*onClick={() => {toggleRoles(props.roles[p.role], state)}}*/>{props.roles[p.role]}</td>
-  //               <td>{p.name}</td>
-  //             </tr>
-  //           )}
-  //         </tbody>
-  //       </table>
-  //       {/* <p> { state.showRole[props.roles[0]] ? state.roleDesc[props.roles[0]] : null } </p>
-  //       <p> { state.showRole[props.roles[1]] ? state.roleDesc[props.roles[1]] : null } </p>
-  //       <p> { state.showRole[props.roles[2]] ? state.roleDesc[props.roles[2]] : null } </p>
-  //       <p> { state.showRole[props.roles[3]] ? state.roleDesc[props.roles[3]] : null } </p>
-  //       <p> { state.showRole[props.roles[4]] ? state.roleDesc[props.roles[4]] : null } </p>
-  //       <p> { state.showRole[props.roles[5]] ? state.roleDesc[props.roles[5]] : null } </p> */}
 
-  //     </div>
-  //   );
-  // }
-  
+
 class Home extends Component {
     constructor(props) {
       super(props);
       this.state = {
         roles: [
-          'Counter Commander',
-          'Sweeping Sergeant',
-          'Living Room Lieutenant',
-          'Garbage Governor',
-          'Recycling Ranger',
-          'Dish Deputy'
+          { name: 'Counter Commander',
+            description: 'Keep counters and table clean and wipe stovetop if needed.'
+          },
+          { name: 'Sweeping Sergeant',
+            description: 'Sweep kitchen when needed.'
+          },
+          { name: 'Living Room Lieutenant',
+            description: 'Militantly enforce a clean living room table.'
+          },
+          { name: 'Garbage Governor',
+            description: 'Take out garbage and help Recycling Ranger.'
+          },
+          { name: 'Recycling Ranger',
+            description: 'Take out recycling and help Garbage Governor.'
+          },
+          { name: 'Dish Deputy',
+            description: "Make sure muthafuckers are doing their dishes and keeping sink clear. No need to do other's dishes."
+          }
         ],
-        people: [],
+        people: []
       };
-  
+
       dateC.get()
         .then(doc => {
           var dbDate = moment(`${doc.data().date} 00:00:00`,"DD/MM/YYYY HH:mm:ss");
@@ -145,22 +100,7 @@ class Home extends Component {
           var offset = Math.floor(moment.duration(ms)._data.days/7);
           if (offset > 0) {
             doc.ref.update({'date': dbDate.add(offset, 'w').format("DD/MM/YYYY")});
-  
-            //increment role ID and get people
-            // usersC.orderBy('points', 'desc').get()
-            //   .then(snapshot => {
-            //     snapshot.forEach(doc => {
-            //       var newID = (doc.data().role + 1) % 4;
-            //       doc.ref.update({'role': newID});
-            //       var newArray = this.state.people.slice();
-            //       newArray.push(doc.data());
-            //       this.setState({people:newArray})
-            //     });
-            //   })
-            //   .catch(err => {
-            //     console.log('Error getting role document', err);
-            //   });
-  
+            // increment and get people
             usersC.onSnapshot(querySnapshot => {
               var newArray = [];
               querySnapshot.forEach(doc => {
@@ -172,7 +112,7 @@ class Home extends Component {
             }, err => {
               console.log(`Encountered error: ${err}`);
             });
-  
+
           } else {
             //just get people
             usersC.onSnapshot(querySnapshot => {
@@ -188,8 +128,7 @@ class Home extends Component {
       })
       .catch(err => {
         console.log('Error getting date document', err);
-      });
-  
+      })
     }
     render() {
       return (
