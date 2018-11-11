@@ -1,4 +1,5 @@
 import React,  {Component} from 'react';
+import Role from './Role'
 
 class Roles extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class Roles extends Component {
   render() {
     return (
       <div>
-      <button onClick={() => {this.toggleRoles(0) } }>Descriptions</button>
+      {/* <button onClick={() => {this.toggleRoles(0) } }>Descriptions</button> */}
         <table className="roles">
           <tbody>
             { [].concat(this.props.people)
@@ -39,29 +40,10 @@ class Roles extends Component {
               })
               .map(p =>
                 <tr key={p.id}>
-                  <td>
-                    {this.props.roles[p.role].name}
-                     <span className="desc">
-                       { this.state.show[p.role] &&
-                         this.props.roles[p.role].description }
-                     </span>
-                  </td>
-                  <td>{p.name}</td>
+                  <Role id={p.id} role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
                 </tr>
             )}
           </tbody>
-          {/* Lucas' Code
-          <tbody>
-            {this.props.people.map(p =>
-              <div>
-                <tr key={p.id}>
-                  <td onClick={() => {this.toggleRoles(this.props.roles[p.role])}}>{this.props.roles[p.role]}</td>
-                  <td>{p.name}</td>
-                </tr>
-                <p> { this.props[this.props.roles[p.role]] ? this.props.roleDesc[this.props.roles[p.role]] : null } </p>
-              </div>
-            )}
-          </tbody>*/}
         </table>
       </div>
     );
