@@ -19,7 +19,7 @@ class Role extends Component {
               {this.props.role}
                <span className="desc">
                  { this.state.showDesc &&
-                   this.props.desc }
+                   this.props.des }
                </span>
             </td>
             <td>{this.props.name}</td>

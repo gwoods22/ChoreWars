@@ -132,16 +132,20 @@ class Home extends Component {
     }
     render() {
       return (
-        <div className="header">
-          <h1 className="title">Chore Wars</h1>
-          <div className="row">
-            <div className="left">
-              <h2>Leaderboard</h2>
-              <Leaderboard people={this.state.people} />
-            </div>
-            <div className="right">
-              <h2>Roles</h2>
-              <Roles people={this.state.people} roles={this.state.roles}/>
+        <div>
+          <div className="sticky">
+              <h1 className="title">Chore Wars</h1>
+          </div>
+          <div className="home">
+            <div className="row">
+              <div className="left">
+                <h2>Leaderboard</h2>
+                <Leaderboard people={this.state.people} />
+              </div>
+              <div className="right">
+                <h2>Roles</h2>
+                <Roles people={this.state.people} roles={this.state.roles}/>
+              </div>
             </div>
           </div>
         </div>

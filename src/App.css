@@ -6,9 +6,7 @@ html, body {
 .title {
   padding: 0px 100px;
 }
-#page-wrapper {
-  padding: 20px 50px;
-}
+
 .btn {
     border: none;
     font-family: inherit;
@@ -137,7 +135,7 @@ table {
   width: 36px;
   height: 30px;
   left: 36px;
-  top: 36px;
+  top: 30px;
 }
 
 .bm-burger-bars {
@@ -172,4 +170,16 @@ table {
 }
 .role-name {
   cursor: pointer;
+}
+
+.sticky {
+  z-index: 999;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  background: #eeeeee;
+}
+.home {
+  padding: 20px 50px;
+  margin-top: 60px
 }
