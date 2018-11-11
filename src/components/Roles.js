@@ -28,6 +28,7 @@ class Roles extends Component {
   render() {
     return (
       <div>
+      <button onClick={() => {this.toggleRoles(0) } }>Descriptions</button>
         <table className="roles">
           <tbody>
             { [].concat(this.props.people)
@@ -40,7 +41,6 @@ class Roles extends Component {
                 <tr key={p.id}>
                   <td>
                     {this.props.roles[p.role].name}
-                    <button onClick={() => {this.toggleRoles(p.role) } }>Description</button>
                      <span className="desc">
                        { this.state.show[p.role] &&
                          this.props.roles[p.role].description }
