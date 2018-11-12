@@ -4,6 +4,9 @@ html, body {
   height: 100%;
   overflow: auto;
 }
+.bm-menu-wrap {
+  top: 0;
+}
 .bm-burger-button {
     top: 25px !important;
 }
