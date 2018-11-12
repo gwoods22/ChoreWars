@@ -104,7 +104,7 @@ class Home extends Component {
             usersC.onSnapshot(querySnapshot => {
               var newArray = [];
               querySnapshot.forEach(doc => {
-                var newID = (doc.data().role + 1) % 4;
+                var newID = (doc.data().role + 1) % 6;
                 doc.ref.update({'role': newID});
                 newArray.push(doc.data());
                 this.setState({people:newArray});
