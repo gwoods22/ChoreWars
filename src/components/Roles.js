@@ -29,7 +29,6 @@ class Roles extends Component {
   render() {
     return (
       <div>
-      {/* <button onClick={() => {this.toggleRoles(0) } }>Descriptions</button> */}
         <table className="roles">
           <tbody>
             { [].concat(this.props.people)
@@ -39,9 +38,7 @@ class Roles extends Component {
                 return 0;
               })
               .map(p =>
-                <tr key={p.id}>
-                  <Role id={p.id} role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
-                </tr>
+                <Role key={p.id} id={p.id} role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
             )}
           </tbody>
         </table>

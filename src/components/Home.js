@@ -57,7 +57,7 @@ function Leaderboard(props) {
               <td>{index + 1}</td>
               <td>{p.points}</td>
               <td>{p.name}</td>
-              <td><button className="btn btn-1 btn-1a" type="submit" onClick={() => {addPoint(p.name)}}>Finshed Chore</button></td>
+              <td><button className="btn" type="submit" onClick={() => {addPoint(p.name)}}>Finshed Chore</button></td>
             </tr>
             )}
         </tbody>

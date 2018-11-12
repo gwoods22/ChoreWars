@@ -14,16 +14,16 @@ class Role extends Component {
     }
     render() {
         return (
-            <tr key={this.props.id}>
+          <tr>
             <td className="role-name" onClick={() => {this.toggleDesc()}}>
               {this.props.role}
                <span className="desc">
                  { this.state.showDesc &&
-                   this.props.des }
+                   this.props.desc }
                </span>
             </td>
             <td>{this.props.name}</td>
-          </tr>  
+          </tr>
         );
     }
 }

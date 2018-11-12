@@ -1,36 +1,95 @@
+/* GENERAL & MENU */
 html, body {
   margin: 0;
   height: 100%;
   overflow: auto;
 }
-.title {
-  padding: 0px 100px;
+.bm-burger-button {
+    top: 25px !important;
+}
+.bm-item {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: #d1d1d1;
+  transition: color 0.2s;
+}
+.bm-item:hover {
+  color: white;
+}
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 28px;
+}
+.bm-burger-bars {
+  background: #373a47;
+}
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+.bm-cross {
+  background: #bdc3c7;
+}
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+.bm-morph-shape {
+  fill: #373a47;
+}
+.bm-item-list {
+  color: #b8b7ad;
+}
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+.sticky {
+  z-index: 300;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  background: #eeeeee;
 }
 
-.btn {
-    border: none;
-    font-family: inherit;
-    font-size: 12px;
-    color: inherit;
-    background: none;
-    cursor: pointer;
-    padding: 5px 20px;
-    display: inline-block;
-    margin: 2px 5px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 250;
-    outline: none;
-    position: relative;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
+/* HOME PAGE */
+.home {
+  padding: 20px 50px;
+  margin-top: 60px
 }
-/* Button 1 */
-.btn-1 {
-	border: 1px solid #0e83cd;
+.title {
+  padding-left: 100px;
+}
+.btn {
+  border: none;
+  font-family: inherit;
+  font-size: 12px;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 5px 20px;
+  display: inline-block;
+  margin: 2px 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 250;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 1px solid #0e83cd;
   color: #fff;
   background: #0e83cd;
+}
+.btn:hover,
+.btn:active {
+	color: #0e83cd;
+	background: #fff;
 }
 .desc {
   display: block;
@@ -39,12 +98,6 @@ html, body {
 }
 .roles button {
   display: block;
-}
-/* Button 1a */
-.btn-1a:hover,
-.btn-1a:active {
-	color: #0e83cd;
-	background: #fff;
 }
 .row {
     display: flex;
@@ -85,6 +138,14 @@ table {
   width: 250px;
   font-weight: 700;
 }
+.roles td:last-child {
+    vertical-align: top;
+}
+.role-name {
+  cursor: pointer;
+}
+
+/* EVENT PAGE */
 .eventlog-container {
   display: flex;
 }
@@ -102,6 +163,7 @@ table {
   flex-direction: row;
 }
 
+/* RESPONSIVE */
 @media (max-width: 700px) {
   .row {
     flex-direction: column;
@@ -110,77 +172,31 @@ table {
     width: 100%;
     padding: 0;
   }
-}
-@media (max-width: 400px) {
-  body {
-      /* padding: 20px; */
+  .right {
+    margin-top: 20px;
+  }
+  .left h2, .right h2 {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin: 10px 0;
   }
 }
-
-/*Styles for sidemenu*/
-.bm-item {
-  display: inline-block;
-  text-decoration: none;
-  margin-bottom: 10px;
-  color: #d1d1d1;
-  transition: color 0.2s;
+@media (max-width: 400px) {
+  .home {
+    padding: 20px 20px;
+  }
 }
-
-.bm-item:hover {
-  color: white;
-}
-
-.bm-burger-button {
-  position: fixed;
-  width: 36px;
-  height: 30px;
-  left: 36px;
-  top: 28px;
-}
-
-.bm-burger-bars {
-  background: #373a47;
-}
-
-.bm-cross-button {
-  height: 24px;
-  width: 24px;
-}
-
-.bm-cross {
-  background: #bdc3c7;
-}
-
-.bm-menu {
-  background: #373a47;
-  padding: 2.5em 1.5em 0;
-  font-size: 1.15em;
-}
-
-
-.bm-morph-shape {
-  fill: #373a47;
-}
-
-.bm-item-list {
-  color: #b8b7ad;
-}
-
-.bm-overlay {
-  background: rgba(0, 0, 0, 0.3);
-}
-.role-name {
-  cursor: pointer;
-}
-
-.sticky {
-  z-index: 300;
-  top: 0;
-  position: fixed;
-  width: 100%;
-  background: #eeeeee;
-}
-.home {
-  padding: 20px 50px;
-  margin-top: 60px
+@media (max-width: 350px) {
+  .home {
+    padding: 20px 10px;
+  }
+  .btn {
+    margin: 3px 0;
+  }
+  .leaderboard th:nth-child(1) {
+    width: 10px;
+  }
+  .leaderboard th:nth-child(2) {
+    width: 20px;
+  }
 }
