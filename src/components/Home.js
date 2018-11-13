@@ -3,6 +3,7 @@ import db from '../firebaseconfig';
 import Roles from './Roles';
 
 let moment = require('moment');
+const firebase = require('firebase/app');
 
 var usersC = db.collection('users');
 var dateC = db.collection('general').doc('lastUpdated');
@@ -95,18 +96,29 @@ class Home extends Component {
 
       dateC.get()
         .then(doc => {
-          var dbDate = moment(`${doc.data().date} 00:00:00`,"DD/MM/YYYY HH:mm:ss");
+          var dbDate = moment("01/01/1970 00:00:00","DD/MM/YYYY HH:mm:ss").seconds(doc.data().date.seconds);
           var ms = moment().diff(dbDate);
           var offset = Math.floor(moment.duration(ms)._data.days/7);
+          console.log(dbDate.format('YYYY-MM-DDTHH:mm:ss'));
           if (offset > 0) {
-            doc.ref.update({'date': dbDate.add(offset, 'w').format("DD/MM/YYYY")});
-            // increment and get people
+            let newDate = firebase.firestore.Timestamp.fromDate( new Date(dbDate.add(offset, 'w').format('YYYY-MM-DDTHH:mm:ss')))
+            doc.ref.update({'date': newDate});
+            // increment role ID once
+            usersC.orderBy('points', 'desc').get()
+              .then(snapshot => {
+                snapshot.forEach(doc => {
+                  var newID = (doc.data().role + 1) % 6;
+                  doc.ref.update({'role': newID});
+                });
+              })
+              .catch(err => {
+                console.log('Error getting role document', err);
+              });
+            //realtime update people array
             usersC.onSnapshot(querySnapshot => {
               var newArray = [];
-              querySnapshot.forEach(doc => {
-                var newID = (doc.data().role + 1) % 6;
-                doc.ref.update({'role': newID});
-                newArray.push(doc.data());
+              querySnapshot.forEach(userDoc => {
+                newArray.push(userDoc.data());
                 this.setState({people:newArray});
               });
             }, err => {
