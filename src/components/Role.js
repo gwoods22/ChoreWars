@@ -14,7 +14,7 @@ class Role extends Component {
     }
     render() {
         return (
-          <tr>
+          <tr className={this.props.class}>
             <td className="role-name" onClick={() => {this.toggleDesc()}}>
               {this.props.role}
                <span className="desc">

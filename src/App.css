@@ -147,6 +147,9 @@ table {
 .role-name {
   cursor: pointer;
 }
+.upBaron {
+  border-top: 2px solid #000;
+}
 
 /* EVENT PAGE */
 .eventlog-container {

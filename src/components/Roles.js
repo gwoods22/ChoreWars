@@ -1,14 +1,55 @@
 import React,  {Component} from 'react';
 import Role from './Role'
+import db from '../firebaseconfig';
+
+const moment = require('moment');
+const firebase = require('firebase/app');
+
+var bathC = db.collection('general').doc('bathroom');
 
 class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
       //whether or not desc is shown
-      show: [false, false, false, false, false, false ]
+      show: [false, false, false, false, false, false ],
+      uBaron: {
+        name: 'Upstairs Baron',
+        description: 'The Bathroom Baron for the downstairs boys. Must clean the bathroom once in the 2 week span.',
+      },
+      dBaron: {
+        name: 'Downstairs Baron',
+        description: 'The Bathroom Baron for the upstairs boys. Must clean the bathroom once in the 2 week span.',
+      },
+      uID: 0,
+      dID: 0
     };
     this.toggleRoles = this.toggleRoles.bind(this);
+
+
+    bathC.get()
+      .then(doc => {
+        var dbDate = moment("01/01/1970 00:00:00","DD/MM/YYYY HH:mm:ss").seconds(doc.data().date.seconds);
+        var ms = moment().diff(dbDate);
+        var offset = Math.floor(moment.duration(ms)._data.days/7);
+        if (offset > 1) {
+          let newDate = firebase.firestore.Timestamp.fromDate( new Date(dbDate.add(offset, 'w').format('YYYY-MM-DDTHH:mm:ss')))
+          doc.ref.update({'date': newDate});
+          // increment bathroom var
+          var newUp = (doc.data().upstairs + 1) % 3 + 3
+          var newDown = (doc.data().downstairs + 1) % 3
+          doc.ref.update({'upstairs': newUp});
+          doc.ref.update({'downstairs': newDown});
+          this.setState({uID: newUp});
+          this.setState({dID: newDown})
+        } else {
+          this.setState({uID: doc.data().upstairs});
+          this.setState({dID: doc.data().downstairs});
+        }
+    })
+    .catch(err => {
+      console.log('Error getting bathroom document', err);
+    })
   }
 
   toggleRoles = (index) => {
@@ -38,7 +79,15 @@ class Roles extends Component {
                 return 0;
               })
               .map(p =>
-                <Role key={p.id} id={p.id} role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
+                <Role key={p.id} class="" role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
+            )}
+            { [].concat(this.props.people).map(p =>
+              p.id === this.state.uID &&
+              <Role key={0} class="upBaron" role={this.state.uBaron.name} desc={this.state.uBaron.description} name={p.name}></Role>
+            )}
+            { [].concat(this.props.people).map(p =>
+              p.id === this.state.dID &&
+              <Role key={0} class="" role={this.state.dBaron.name} desc={this.state.dBaron.description} name={p.name}></Role>
             )}
           </tbody>
         </table>

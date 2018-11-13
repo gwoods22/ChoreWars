@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import db from '../firebaseconfig';
 import Roles from './Roles';
 
-let moment = require('moment');
+const moment = require('moment');
 const firebase = require('firebase/app');
 
 var usersC = db.collection('users');
@@ -75,20 +75,20 @@ class Home extends Component {
           { name: 'Counter Commander',
             description: 'Keep counters and table clean and wipe stovetop if needed.'
           },
-          { name: 'Sweeping Sergeant',
-            description: 'Sweep kitchen when needed.'
-          },
-          { name: 'Living Room Lieutenant',
-            description: 'Militantly enforce a clean living room table.'
+          { name: 'Dish Deputy',
+            description: "Make sure muthafuckers are doing their dishes and keeping sink clear. No need to do other's dishes."
           },
           { name: 'Garbage Governor',
             description: 'Take out garbage and help Recycling Ranger.'
           },
+          { name: 'Living Room Lieutenant',
+            description: 'Militantly enforce a clean living room table.'
+          },
           { name: 'Recycling Ranger',
             description: 'Take out recycling and help Garbage Governor.'
           },
-          { name: 'Dish Deputy',
-            description: "Make sure muthafuckers are doing their dishes and keeping sink clear. No need to do other's dishes."
+          { name: 'Sweeping Sergeant',
+            description: 'Sweep kitchen when needed.'
           }
         ],
         people: []
@@ -99,7 +99,6 @@ class Home extends Component {
           var dbDate = moment("01/01/1970 00:00:00","DD/MM/YYYY HH:mm:ss").seconds(doc.data().date.seconds);
           var ms = moment().diff(dbDate);
           var offset = Math.floor(moment.duration(ms)._data.days/7);
-          console.log(dbDate.format('YYYY-MM-DDTHH:mm:ss'));
           if (offset > 0) {
             let newDate = firebase.firestore.Timestamp.fromDate( new Date(dbDate.add(offset, 'w').format('YYYY-MM-DDTHH:mm:ss')))
             doc.ref.update({'date': newDate});
