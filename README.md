@@ -1,8 +1,5 @@
 # Emerson Chores React
 
-## Tabs
-[https://tab.bz/4w01x](https://tab.bz/4w01x)
-
 ## Commands to know:
 
 ### `npm start`
