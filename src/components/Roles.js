@@ -15,11 +15,11 @@ class Roles extends Component {
       show: [false, false, false, false, false, false ],
       uBaron: {
         name: 'Upstairs Baron',
-        description: 'The Bathroom Baron for the downstairs boys. Must clean the bathroom once in the 2 week span.',
+        description: 'The Bathroom Baron for the upstairs boys. Must clean the bathroom once in the 2 week span.',
       },
       dBaron: {
         name: 'Downstairs Baron',
-        description: 'The Bathroom Baron for the upstairs boys. Must clean the bathroom once in the 2 week span.',
+        description: 'The Bathroom Baron for the downstairs boys. Must clean the bathroom once in the 2 week span.',
       },
       uID: 0,
       dID: 0
