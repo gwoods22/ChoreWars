@@ -76,7 +76,7 @@ class Home extends Component {
             description: 'Keep counters and table clean and wipe stovetop if needed.'
           },
           { name: 'Dish Deputy',
-            description: "Make sure muthafuckers are doing their dishes and keeping sink clear. No need to do other's dishes."
+            description: "Make sure Billy's are doing their dishes and keeping sink clear. No need to do other's dishes."
           },
           { name: 'Garbage Governor',
             description: 'Take out garbage and help Recycling Ranger.'

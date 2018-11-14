@@ -19,7 +19,7 @@ class Event extends Component {
               { this.props.user }
             </div>
             <div className="event-prop">
-              { this.props.chore }
+              {(this.props.chore === 'unknown') ? <em>{ this.props.chore }</em> : this.props.chore}
             </div>
             <div className="event-prop">
               { this.state.date }
