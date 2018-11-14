@@ -195,8 +195,14 @@ table {
   .home {
     padding: 20px 20px;
   }
+  .eventlog-table, .event-log-head {
+    padding-left: 20px;
+  }
 }
 @media (max-width: 350px) {
+  .eventlog-table, .event-log-head {
+    padding-left: 10px;
+  }
   .home {
     padding: 20px 10px;
   }
