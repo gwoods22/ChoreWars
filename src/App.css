@@ -61,7 +61,7 @@ html, body {
 
 /* HOME PAGE */
 .home {
-  padding: 20px 50px;
+  padding: 20px 35px;
   margin-top: 60px
 }
 .title {
@@ -155,6 +155,9 @@ table {
 .eventlog-container {
   display: flex;
 }
+.eventlog-table {
+  padding-left: 35px;
+}
 .event-prop {
   justify-content: left;
   flex: 1;
@@ -163,6 +166,7 @@ table {
 .event-log-head {
   display: flex;
   flex-direction: row;
+  padding-left: 35px;
 }
 .event-log-content {
   display: flex;
@@ -191,8 +195,14 @@ table {
   .home {
     padding: 20px 20px;
   }
+  .eventlog-table, .event-log-head {
+    padding-left: 20px;
+  }
 }
 @media (max-width: 350px) {
+  .eventlog-table, .event-log-head {
+    padding-left: 10px;
+  }
   .home {
     padding: 20px 10px;
   }

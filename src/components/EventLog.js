@@ -52,13 +52,14 @@ class EventLog extends Component {
                 <strong>Date</strong>
               </div>
           </div>
-          <div>
+          <div className="eventlog-table">
 
           {this.state.events.map(e =>
             <Event key={e.id} user={e.name} chore={e.chore} date={e.date}>
             </Event>
           )}
-
+          <br></br><br></br>
+          <span><em>Note: An unknown chore indicates that the point was entered using the web interface.</em></span>
           </div>
         </div>
       );
