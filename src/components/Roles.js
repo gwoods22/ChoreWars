@@ -34,7 +34,7 @@ class Roles extends Component {
         var offset = Math.floor(moment.duration(ms)._data.days/7);
         if (offset > 1) {
           // let newDate = firebase.firestore.Timestamp.fromDate( new Date(dbDate.add(offset, 'w').format('YYYY-MM-DDTHH:mm:ss')))
-          let newDate = firebase.firestore.Timestamp.fromDate( new Date( dbDate.add(offset*24*60, 'm').unix() ))
+          let newDate = firebase.firestore.Timestamp.fromDate( new Date( dbDate.add(offset, 'w').unix() ))
           doc.ref.update({'date': newDate});
           // increment bathroom var
           var newUp = (doc.data().upstairs + 1) % 3 + 3;
@@ -65,7 +65,6 @@ class Roles extends Component {
         show: [true, true, true, true, true, true ]
       }))
     }
-    console.log('working');
   }
 
   render() {
