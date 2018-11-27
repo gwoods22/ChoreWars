@@ -96,9 +96,14 @@ class Home extends Component {
 
       dateC.get()
         .then(doc => {
-          var dbDate = moment("01/01/1970 00:00:00","DD/MM/YYYY HH:mm:ss").seconds(doc.data().date.seconds);
+          //account for timezone offset
+          var dbDate = moment("01/01/1970 00:00:00","DD/MM/YYYY HH:mm:ss").seconds(doc.data().date.seconds).add(-5, 'h');
           var ms = moment().diff(dbDate);
           var offset = Math.floor(moment.duration(ms)._data.days/7);
+
+          let t = moment.duration(ms)._data;
+          console.log(`${t.days} days ${t.hours} hours ${t.minutes} minutes`);
+
           if (offset > 0) {
             let newDate = firebase.firestore.Timestamp.fromDate( new Date(dbDate.add(offset, 'w').format('YYYY-MM-DDTHH:mm:ss')))
             doc.ref.update({'date': newDate});
