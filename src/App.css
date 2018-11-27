@@ -150,6 +150,41 @@ table {
 .upBaron {
   border-top: 2px solid #000;
 }
+.dropdown {
+    position: relative;
+    top: 8px;
+    list-style: none;
+    margin: 0;
+    background: #0081d0;
+    border-radius: 10px;
+    color: #fff;
+    padding: 5px 0;
+    text-align: center;
+}
+.dropdown::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #007fd3;
+    position: absolute;
+    top: -9.5px;
+    left: 50%;
+    transform: translate(-50%);
+}
+.dropdown li {
+    border-bottom: 0.5px solid #fff;
+    width: 65%;
+    margin: 0 auto;
+    padding: 3px 0;
+}
+.dropdown li:last-child {
+    border-bottom: none;
+}
+.dropdown li:hover {
+    color: #000;
+}
 
 /* EVENT PAGE */
 .eventlog-container {
