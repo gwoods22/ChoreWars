@@ -38,7 +38,7 @@ class EventLog extends Component {
     render() {
       return (
         <div className="event-log-container">
-          <div>
+          <div className="event-sticky">
             <h2 className="title">Event Log</h2>
           </div>
           <div className="event-log-head">
