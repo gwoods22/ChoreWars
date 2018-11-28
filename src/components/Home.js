@@ -9,14 +9,8 @@ var usersC = db.collection('users');
 var dateC = db.collection('general').doc('lastUpdated');
 
 
-class Leaderboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showDrop: 'none'
-    };
-  }
-  addPoint(user) {
+function Leaderboard(props) {
+  function addPoint(user, chore) {
     db.collection("users").where("name", "==", user)
     .get()
     .then(function(querySnapshot) {
@@ -35,7 +29,7 @@ class Leaderboard extends Component {
         date = parseInt(date.format("YYYYMMDDHHmmss"));
         let data = {
           name: user,
-          chore: "unknown",
+          chore: chore,
           date: date
         };
         db.collection("eventLogData").add(data);
@@ -44,8 +38,7 @@ class Leaderboard extends Component {
         console.error("Error adding document to eventLogData: ", error);
     });
   }
-  render() {
-    return (
+  return (
     <table className="leaderboard">
       <tbody>
         <tr>
@@ -53,7 +46,7 @@ class Leaderboard extends Component {
           <th>Score</th>
           <th>Name</th>
         </tr>
-        { this.props.people
+        { props.people
           .sort(function compare(a, b) {
             if (a.points < b.points) return 1;
             if (a.points > b.points) return -1;
@@ -64,23 +57,22 @@ class Leaderboard extends Component {
             <td>{index + 1}</td>
             <td>{p.points}</td>
             <td>{p.name}</td>
-            <td>
-              <button className="btn" type="submit" onClick={() => {this.addPoint(p.name)}}>Finshed Chore</button>
-              <ul className="dropdown" style={{display: this.state.showDrop}}>
-                <li>Counters</li>
-                <li>Dish Unload</li>
-                <li>Garbage</li>
-                <li>Recycling</li>
-                <li>Sweep</li>
-                <li>Bathroom</li>
-              </ul>
-            </td>
+              <td className="btn-container">
+                <button className="btn">Finshed Chore</button>
+                <ul className="dropdown">
+                  <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'counters')}}>Counters</button></li>
+                  <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'dishes')}}>Dish Unload</button></li>
+                  <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'garbage')}}>Garbage</button></li>
+                  <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'garbage')}}>Recycling</button></li>
+                  <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'swept')}}>Sweep</button></li>
+                  <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'bathroom')}}>Bathroom</button></li>
+                </ul>
+              </td>
           </tr>
           )}
       </tbody>
     </table>
-    );
-  }
+  );
 }
 
 

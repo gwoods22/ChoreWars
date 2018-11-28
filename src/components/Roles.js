@@ -11,8 +11,6 @@ class Roles extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //whether or not desc is shown
-      show: [false, false, false, false, false, false ],
       uBaron: {
         name: 'Upstairs Baron',
         description: 'The Bathroom Baron for the upstairs boys. Must clean the bathroom once in the 2 week span.',
@@ -79,15 +77,15 @@ class Roles extends Component {
                 return 0;
               })
               .map(p =>
-                <Role key={p.id} class="" role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
+                <Role key={p.id} role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
             )}
             { [].concat(this.props.people).map(p =>
               p.id === this.state.uID &&
-              <Role key={0} class="upBaron" role={this.state.uBaron.name} desc={this.state.uBaron.description} name={p.name}></Role>
+              <Role key={0} class="divider" role={this.state.uBaron.name} desc={this.state.uBaron.description} name={p.name}></Role>
             )}
             { [].concat(this.props.people).map(p =>
               p.id === this.state.dID &&
-              <Role key={0} class="" role={this.state.dBaron.name} desc={this.state.dBaron.description} name={p.name}></Role>
+              <Role key={0} role={this.state.dBaron.name} desc={this.state.dBaron.description} name={p.name}></Role>
             )}
           </tbody>
         </table>
