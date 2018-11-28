@@ -187,6 +187,13 @@ table {
 }
 
 /* EVENT PAGE */
+.event-sticky {
+  z-index: 300;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  background: #eeeeee;
+}
 .eventlog-container {
   display: flex;
 }
@@ -202,6 +209,7 @@ table {
   display: flex;
   flex-direction: row;
   padding-left: 35px;
+  padding-top: 70px;
 }
 .event-log-content {
   display: flex;
