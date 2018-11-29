@@ -3,4 +3,4 @@
 - Save stats in Firebase at end of 6 weeks
 - Build page to display previous period's stats
 - Fix Dialogflow code for cleaning Bathroom and unloading dishes
-- Stdlib text service
+- Stdlib texting service
