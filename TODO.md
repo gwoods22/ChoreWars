@@ -4,3 +4,4 @@
 - Build page to display previous period's stats
 - Fix Dialogflow code for cleaning Bathroom and unloading dishes
 - Stdlib texting service
+- Dialogflow command for checking the roles
