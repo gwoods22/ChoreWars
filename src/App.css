@@ -10,6 +10,9 @@ html, body {
 .bm-burger-button {
     top: 25px !important;
 }
+.bm-overlay {
+  top: 0;
+}
 .bm-item {
   display: inline-block;
   text-decoration: none;
