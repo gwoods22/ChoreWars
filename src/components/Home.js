@@ -88,13 +88,10 @@ class Home extends Component {
           description: "Make sure Billy's are doing their dishes and keeping sink clear. No need to do other's dishes."
         },
         { name: 'Garbage Governor',
-          description: 'Take out garbage and help Recycling Ranger.'
+          description: 'Take out garbage and recycling each week.'
         },
         { name: 'Living Room Lieutenant',
           description: 'Militantly enforce a clean living room table.'
-        },
-        { name: 'Recycling Ranger',
-          description: 'Take out recycling and help Garbage Governor.'
         },
         { name: 'Sweeping Sergeant',
           description: 'Sweep kitchen when needed.'
@@ -116,7 +113,7 @@ class Home extends Component {
           usersC.orderBy('points', 'desc').get()
             .then(snapshot => {
               snapshot.forEach(doc => {
-                var newID = (doc.data().role + 1) % 6;
+                var newID = (doc.data().role + 1) % 5;
                 doc.ref.update({'role': newID});
               });
             })

@@ -55,12 +55,12 @@ class Roles extends Component {
     if(this.state.show[0]) {
       this.setState(prevState => ({
         // show: prevState.slice(0,index).concat([true]).concat(prevState.slice(index+1, prevState.length))
-        show: [false, false, false, false, false, false ]
+        show: [false, false, false, false, false ]
       }))
     } else {
       this.setState(prevState => ({
         // show: prevState.slice(0,index).concat([false]).concat(prevState.slice(index+1, prevState.length))
-        show: [true, true, true, true, true, true ]
+        show: [true, true, true, true, true ]
       }))
     }
   }
@@ -78,20 +78,25 @@ class Roles extends Component {
               })
               .map(p =>
                 <Role key={p.id} role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
-            )}
-            { [].concat(this.props.people).map(p =>
-              p.id === this.state.uID &&
-              <Role key={0} class="divider" role={this.state.uBaron.name} desc={this.state.uBaron.description} name={p.name}></Role>
-            )}
-            { [].concat(this.props.people).map(p =>
-              p.id === this.state.dID &&
-              <Role key={0} role={this.state.dBaron.name} desc={this.state.dBaron.description} name={p.name}></Role>
-            )}
+                )
+          }
+            { /*
+              }{ [].concat(this.props.people).map(p =>
+                p.id === this.state.uID &&
+                <Role key={0} class="divider" role={this.state.uBaron.name} desc={this.state.uBaron.description} name={p.name}></Role>
+              )}
+              { [].concat(this.props.people).map(p =>
+                p.id === this.state.dID &&
+                <Role key={0} role={this.state.dBaron.name} desc={this.state.dBaron.description} name={p.name}></Role>
+              )}
+            */}
           </tbody>
         </table>
       </div>
     );
   }
 }
+
+
 
 export default Roles;
