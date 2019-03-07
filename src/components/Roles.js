@@ -78,7 +78,7 @@ class Roles extends Component {
               })
               .map(p =>
                 <Role key={p.id} role={this.props.roles[p.role].name} desc={this.props.roles[p.role].description} name={p.name}></Role>
-                )
+              )
           }
             { /*
               }{ [].concat(this.props.people).map(p =>

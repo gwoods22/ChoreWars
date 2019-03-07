@@ -63,7 +63,6 @@ function Leaderboard(props) {
                   <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'counters')}}>Counters</button></li>
                   <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'dishes')}}>Dish Unload</button></li>
                   <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'garbage')}}>Garbage</button></li>
-                  <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'garbage')}}>Recycling</button></li>
                   <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'swept')}}>Sweep</button></li>
                   <li><button className="drop-btn" type="submit" onClick={() => {addPoint(p.name, 'bathroom')}}>Bathroom</button></li>
                 </ul>
