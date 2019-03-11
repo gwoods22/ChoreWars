@@ -16,16 +16,18 @@ class EventLog extends Component {
           querySnapshot.docChanges().forEach (change => {
             let newEvent = change.doc.data();
             newEvent.id = identifier;
-            identifier = identifier + 1;
+            identifier++;
             function NewEvent(event) {
               return event === newEvent;
             }
             if (change.type === "added" && !this.state.events.find (NewEvent)) {
               temp = this.state.events;
               temp.unshift(newEvent);
-              // if(this.state.events.length > 5) { //keep event log to 5 events
-              //   this.state.events.pop();
-              // }
+
+              //keep event log to 10 events
+              if(this.state.events.length > 10) {
+                this.state.events.pop();
+              }
               this.setState({events: temp});
             }
           });
