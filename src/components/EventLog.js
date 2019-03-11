@@ -61,7 +61,7 @@ class EventLog extends Component {
             </Event>
           )}
           <br></br><br></br>
-          <span><em>Note: An unknown chore indicates that the point was entered using the web interface.</em></span>
+          <!-- <span><em>Note: An unknown chore indicates that the point was entered using the web interface.</em></span>-->
           </div>
         </div>
       );
