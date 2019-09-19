@@ -4,8 +4,7 @@
 
 ### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in the development mode.
 
 ### `npm run build`
 
@@ -13,8 +12,8 @@ Builds the app for production to the `build` folder.
 
 ### `firebase deploy`
 
-Deploys app to once the app has been built. [https://emersonchores.firebaseapp.com/](https://emersonchores.firebaseapp.com/)
+Deploys app to once the app has been built. [https://emersonchores.web.app](https://emersonchores.web.app)
 
-### `rfd`
+### `npm run deploy`
 
-React Firebase Deploy. Alias for `npm run build; firebase deploy;`
+Build and deploy app to firebase.
