@@ -1,3 +1,8 @@
+.left {
+	display: none;
+	/* Hide leaderboard */
+}
+
 /* GENERAL & MENU */
 html,
 body {
@@ -109,7 +114,6 @@ body {
 .row {
 	display: flex;
 	justify-content: space-between;
-	flex-direction: row-reverse;
 }
 .left,
 .right {
