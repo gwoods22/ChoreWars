@@ -75,7 +75,6 @@ class Roles extends Component {
 	};
 
 	render() {
-		console.log(this.props.roles);
 		return (
 			<div>
 				<table className="roles">
