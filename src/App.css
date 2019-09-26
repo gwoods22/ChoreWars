@@ -195,8 +195,6 @@ td:nth-child(2) {
 .dropdown li:last-child {
 	border-bottom: none;
 }
-.drop-btn {
-}
 
 /* EVENT PAGE */
 .event-sticky {
