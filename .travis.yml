@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - '7'
+script:
+  - echo "Deploy!!"
+install:
+  - npm install -g firebase-tools
+after_success:
+  - firebase deploy --project emersonchores --token 1/UgOhlM1Vj8CGWj7UWK7j3k5FwUYxjGVWU5tZZiA_Z81RPPQDDRP4ANTVdR1txbOA
