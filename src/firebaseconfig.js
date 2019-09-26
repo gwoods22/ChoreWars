@@ -1,4 +1,3 @@
-import hiddenKey from './api';
 // import firebase from 'firebase';
 //
 // let config = {
@@ -12,7 +11,7 @@ import hiddenKey from './api';
 const firebase = require('firebase/app');
 require('firebase/firestore');
 firebase.initializeApp({
-	apiKey: hiddenKey,
+	apiKey: process.env.FIREBASE_API,
 	authDomain: 'emersonchores.firebaseapp.com',
 	projectId: 'emersonchores',
 });
