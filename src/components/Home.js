@@ -1,127 +1,13 @@
 import React, { Component } from 'react';
 import db from '../firebaseconfig';
 import Roles from './Roles';
+import Leaderboard from './Leaderboard';
 
 const moment = require('moment');
 const firebase = require('firebase/app');
 
 var usersC = db.collection('users');
 var dateC = db.collection('general').doc('lastUpdated');
-
-function Leaderboard(props) {
-	function addPoint(user, chore) {
-		db.collection('users')
-			.where('name', '==', user)
-			.get()
-			.then(function(querySnapshot) {
-				var doc = querySnapshot.docs[0];
-				var current = doc.data().points;
-				doc.ref.update({
-					points: current + 1,
-				});
-			})
-			.catch(function(error) {
-				console.log('Error getting documents from users: ', error);
-			})
-			.then(function() {
-				let date = moment().utc();
-				date = parseInt(date.format('YYYYMMDDHHmmss'));
-				let data = {
-					name: user,
-					chore: chore,
-					date: date,
-				};
-				db.collection('eventLogData').add(data);
-			})
-			.catch(function(error) {
-				console.error('Error adding document to eventLogData: ', error);
-			});
-	}
-	return (
-		<table className="leaderboard">
-			<tbody>
-				<tr>
-					<th>Rank</th>
-					<th>Score</th>
-					<th>Name</th>
-				</tr>
-				{props.people
-					.sort(function compare(a, b) {
-						if (a.points < b.points) return 1;
-						if (a.points > b.points) return -1;
-						return 0;
-					})
-					.map((p, index) => (
-						<tr key={p.id}>
-							<td>{index + 1}</td>
-							<td>{p.points}</td>
-							<td>{p.name}</td>
-							<td className="btn-container">
-								<button className="btn">Finshed Chore</button>
-								<ul className="dropdown">
-									<li>
-										<button
-											className="drop-btn"
-											type="submit"
-											onClick={() => {
-												addPoint(p.name, 'counters');
-											}}
-										>
-											Counters
-										</button>
-									</li>
-									<li>
-										<button
-											className="drop-btn"
-											type="submit"
-											onClick={() => {
-												addPoint(p.name, 'dishes');
-											}}
-										>
-											Dish Unload
-										</button>
-									</li>
-									<li>
-										<button
-											className="drop-btn"
-											type="submit"
-											onClick={() => {
-												addPoint(p.name, 'garbage');
-											}}
-										>
-											Garbage
-										</button>
-									</li>
-									<li>
-										<button
-											className="drop-btn"
-											type="submit"
-											onClick={() => {
-												addPoint(p.name, 'swept');
-											}}
-										>
-											Sweep
-										</button>
-									</li>
-									<li>
-										<button
-											className="drop-btn"
-											type="submit"
-											onClick={() => {
-												addPoint(p.name, 'bathroom');
-											}}
-										>
-											Bathroom
-										</button>
-									</li>
-								</ul>
-							</td>
-						</tr>
-					))}
-			</tbody>
-		</table>
-	);
-}
 
 class Home extends Component {
 	constructor(props) {
@@ -161,15 +47,16 @@ class Home extends Component {
 		dateC
 			.get()
 			.then((doc) => {
-				//account for timezone offset
-				var dbDate = moment('01/01/1970 00:00:00', 'DD/MM/YYYY HH:mm:ss')
-					.seconds(doc.data().date.seconds)
-					.add(-5, 'h');
-				var ms = moment().diff(dbDate);
-				var offset = Math.floor(moment.duration(ms)._data.days / 7);
-				if (offset > 0) {
+				var dbDate = moment(doc.data().date.toDate());
+				var days = moment().diff(dbDate, 'days');
+
+				if (days > 6) {
 					let newDate = firebase.firestore.Timestamp.fromDate(
-						new Date(dbDate.add(offset, 'w').format('YYYY-MM-DDTHH:mm:ss'))
+						new Date(
+							dbDate
+								.add(Math.floor(days / 7), 'w')
+								.format('YYYY-MM-DDTHH:mm:ss')
+						)
 					);
 					doc.ref.update({ date: newDate });
 					// increment role ID once
@@ -178,7 +65,7 @@ class Home extends Component {
 						.get()
 						.then((snapshot) => {
 							snapshot.forEach((doc) => {
-								var newID = (doc.data().role + 1) % 5;
+								var newID = (doc.data().role - 1) % 6;
 								doc.ref.update({ role: newID });
 							});
 						})
