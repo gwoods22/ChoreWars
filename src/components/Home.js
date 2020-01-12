@@ -6,6 +6,8 @@ const moment = require('moment');
 const firebase = require('firebase/app');
 
 var usersC = db.collection('users');
+var rolesDoc = db.collection('general').doc('roles');
+console.log(rolesDoc)
 var dateC = db.collection('general').doc('lastUpdated');
 
 function Leaderboard(props) {
@@ -126,35 +128,8 @@ function Leaderboard(props) {
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			roles: [
-				{
-					name: 'Counter Commander',
-					description:
-						'Keep counters and table clean and wipe stovetop if needed.',
-				},
-				{
-					name: 'Dish Deputy',
-					description:
-						"Make sure Billy's are doing their dishes and keeping sink clear. No need to do other's dishes.",
-				},
-				{
-					name: 'Garbage Governor',
-					description: 'Take out garbage with help from the Garbage Governor.',
-				},
-				{
-					name: 'Recycling Ranger',
-					description: 'Take out garbage with help from the Recycling Ranger.',
-				},
-				{
-					name: 'Living Room Lieutenant',
-					description: 'Militantly enforce a clean living room table.',
-				},
-				{
-					name: 'Sweeping Sergeant',
-					description: 'Sweep kitchen when needed.',
-				},
-			],
+		this.state = { // TODO: put descriptions in db
+			roles: [],
 			people: [],
 		};
 
@@ -217,6 +192,9 @@ class Home extends Component {
 			.catch((err) => {
 				console.log('Error getting date document', err);
 			});
+		rolesDoc.get().then(docSnapshot => {
+			this.state.roles = docSnapshot.get('roleNames');
+		})
 	}
 	render() {
 		return (
