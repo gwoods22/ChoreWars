@@ -148,18 +148,20 @@ class Home extends Component {
 					);
 					doc.ref.update({ date: newDate });
 					// increment role ID once
-					usersC
-						.orderBy('points', 'desc')
-						.get()
-						.then((snapshot) => {
-							snapshot.forEach((doc) => {
-								var newID = (doc.data().role + 1) % 5;
-								doc.ref.update({ role: newID });
+					if(this.state.people.length > 0) {
+						usersC
+							.orderBy('points', 'desc')
+							.get()
+							.then((snapshot) => {
+								snapshot.forEach((doc) => {
+									var newID = (doc.data().role + 1) % this.state.people.length;
+									doc.ref.update({ role: newID });
+								});
+							})
+							.catch((err) => {
+								console.log('Error getting role document', err);
 							});
-						})
-						.catch((err) => {
-							console.log('Error getting role document', err);
-						});
+					}
 					//realtime update people array
 					usersC.onSnapshot(
 						(querySnapshot) => {

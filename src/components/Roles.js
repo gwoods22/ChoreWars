@@ -75,10 +75,11 @@ class Roles extends Component {
 	render() {
 		return (
 			<div>
-				<table className="roles">
-					<tbody>
-						{this.props.roles && this.props.people
-							? this.props.people
+				{this.props.roles  && this.props.people && this.props.roles.length > 0 ? ( //this condition first checks that roles exists, then that is has contents
+					<>
+						<table className="roles">
+							<tbody>
+								{this.props.people
 									.sort(function compare(a, b) {
 										if (a.role < b.role) return -1;
 										if (a.role > b.role) return 1;
@@ -91,20 +92,13 @@ class Roles extends Component {
 											desc={this.props.roles[p.role].description}
 											name={p.name}
 										/>
-									))
-							: null}
-						{/*
-              }{ [].concat(this.props.people).map(p =>
-                p.id === this.state.uID &&
-                <Role key={0} class="divider" role={this.state.uBaron.name} desc={this.state.uBaron.description} name={p.name}></Role>
-              )}
-              { [].concat(this.props.people).map(p =>
-                p.id === this.state.dID &&
-                <Role key={0} role={this.state.dBaron.name} desc={this.state.dBaron.description} name={p.name}></Role>
-              )}
-            */}
-					</tbody>
-				</table>
+									))}
+							</tbody>
+						</table>
+						<br/>
+						<span>Click role to see description</span>
+					</>
+				) : null}
 			</div>
 		);
 	}
