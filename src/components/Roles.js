@@ -5,8 +5,6 @@ import db from '../firebaseconfig';
 const moment = require('moment');
 const firebase = require('firebase/app');
 
-const USERCOUNT = 5;
-
 var bathC = db.collection('general').doc('bathroom');
 
 class Roles extends Component {
@@ -25,6 +23,7 @@ class Roles extends Component {
 			},
 			uID: 0,
 			dID: 0,
+			userCount: props.people.length,
 		};
 		this.toggleRoles = this.toggleRoles.bind(this);
 
@@ -64,48 +63,42 @@ class Roles extends Component {
 		if (this.state.show[0]) {
 			this.setState((prevState) => ({
 				// show: prevState.slice(0,index).concat([true]).concat(prevState.slice(index+1, prevState.length))
-				show: new Array(USERCOUNT).fill(false),
+				show: new Array(this.state.userCount).fill(false),
 			}));
 		} else {
 			this.setState((prevState) => ({
 				// show: prevState.slice(0,index).concat([false]).concat(prevState.slice(index+1, prevState.length))
-				show: new Array(USERCOUNT).fill(true),
+				show: new Array(this.state.userCount).fill(true),
 			}));
 		}
 	};
-
 	render() {
 		return (
 			<div>
-				<table className="roles">
-					<tbody>
-						{[]
-							.concat(this.props.people)
-							.sort(function compare(a, b) {
-								if (a.role < b.role) return -1;
-								if (a.role > b.role) return 1;
-								return 0;
-							})
-							.map((p) => (
-								<Role
-									key={p.id}
-									role={this.props.roles[p.role].name}
-									desc={this.props.roles[p.role].description}
-									name={p.name}
-								></Role>
-							))}
-						{/*
-              }{ [].concat(this.props.people).map(p =>
-                p.id === this.state.uID &&
-                <Role key={0} class="divider" role={this.state.uBaron.name} desc={this.state.uBaron.description} name={p.name}></Role>
-              )}
-              { [].concat(this.props.people).map(p =>
-                p.id === this.state.dID &&
-                <Role key={0} role={this.state.dBaron.name} desc={this.state.dBaron.description} name={p.name}></Role>
-              )}
-            */}
-					</tbody>
-				</table>
+				{this.props.roles  && this.props.people && this.props.roles.length > 0 ? ( //this condition first checks that roles exists, then that is has contents
+					<>
+						<table className="roles">
+							<tbody>
+								{this.props.people
+									.sort(function compare(a, b) {
+										if (a.role < b.role) return -1;
+										if (a.role > b.role) return 1;
+										return 0;
+									})
+									.map((p) => (
+										<Role
+											key={p.id}
+											role={this.props.roles[p.role].name}
+											desc={this.props.roles[p.role].description}
+											name={p.name}
+										/>
+									))}
+							</tbody>
+						</table>
+						<br/>
+						<span>Click role to see description</span>
+					</>
+				) : null}
 			</div>
 		);
 	}
